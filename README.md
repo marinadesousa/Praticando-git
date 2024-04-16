@@ -26,7 +26,7 @@ git switch -c novoBranch
 
 O parâmetro -b alterna para novoBranch criando o branch. o mesmo acontece com o comando git switch com o parâmetro -c.
 
- ~~~bash
+~~~bash
 git branch -D nomeBranch
 git push --delete origin nomeBranch
 ~~~
@@ -34,25 +34,39 @@ git push --delete origin nomeBranch
 Para apagar um branch é preciso primeiro apagá-lo localmente (1º comando) e depois propagar a deleção para o repositório remoto (2º comando).
 
 ~~~bash
-git rebase -i <referenciaCommit>
+git log --graph --oneline
 ~~~
 
-`referenciaCommit` diz respeito à localização do commit que você deseja alterar.
+O comando `log` exibe o histórico de commits em detalhes. Com as flags `--graph` e `--oneline`
+exibe o histórico em um formato mais compreensível, através de um grafo(grafo?)
+
+### Rebase interativo
+
+Para alterar o autor de um commit, você pode utilizar o rebase interativo e o comando `commit --amend`
 
 ~~~bash
-git commit --amend --author="Nome Autor <email@autor>" --no-edit 
+git rebase -i <refereciaCommit>
 ~~~
 
-Você também pode usar a flag `--reset-author` no lugar de `--author`, caso seu usuário e email esteja já configurado no Git.
+A referência do commit deve ser sempre para o commit anterior ao commit que deve ser alterado.
+
+No editor de commits, altere a instrução do commit desejado de `pick` para `edit`. Em seguida grave e feche o editor.
+
+O rebase fará uma pausa para que você altere as informações do autor.
+
+~~~bash
+git commit --amend --reset-author --no-edit
+~~~
+
+Caso você queira especificar o autor, utilize a flag `--author="Nome do Autor <email@autor>"`, nesse exato formato.
+
+Caso seu commit seja vazio, acrescente ainda a flag `--allow-empty`.
+
+Após o reparo do commit, contiue o processo do rebase com o comando abaixo.
 
 ~~~bash
 git rebase --continue
 ~~~
 
-Em seguida o rebase pode continuar o processo.
+Finalmente, **confira o novo histórico 
 
-~~~bash
-git push --force
-~~~
-
-Por fim, o push forçado atualiza o repositório remoto com a sua nova versão do histórico.
