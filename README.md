@@ -24,3 +24,34 @@ git switch -c novoBranch
 ~~~
 
 O parâmetro -b alterna para novoBranch criando o branch. o mesmo acontece com o comando git switch com o parâmetro -c.
+
+ ~~~bash
+git branch -D nomeBranch
+git push --delete origin nomeBranch
+~~~
+
+Para apagar um branch é preciso primeiro apagá-lo localmente (1º comando) e depois propagar a deleção para o repositório remoto (2º comando).
+
+~~~bash
+git rebase -i <referenciaCommit>
+~~~
+
+`referenciaCommit` diz respeito à localização do commit que você deseja alterar.
+
+~~~bash
+git commit --amend --author="Nome Autor <email@autor>" --no-edit 
+~~~
+
+Você também pode usar a flag `--reset-author` no lugar de `--author`, caso seu usuário e email esteja já configurado no Git.
+
+~~~bash
+git rebase --continue
+~~~
+
+Em seguida o rebase pode continuar o processo.
+
+~~~bash
+git push --force
+~~~
+
+Por fim, o push forçado atualiza o repositório remoto com a sua nova versão do histórico.
